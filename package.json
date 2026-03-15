@@ -1,0 +1,18 @@
+{
+  "name": "daily-standup-reporter",
+  "version": "1.0.0",
+  "description": "AI-powered daily standup report generator - lobster reads your activity and writes your standup",
+  "main": "standup.js",
+  "scripts": {
+    "generate": "node standup.js",
+    "start": "node standup.js"
+  },
+  "keywords": ["openclaw", "standup", "daily-report", "ai-employee"],
+  "author": "Youssef Reda",
+  "license": "MIT",
+  "dependencies": {
+    "simple-git": "^3.22.0",
+    "axios": "^1.6.0",
+    "dayjs": "^1.11.10"
+  }
+}

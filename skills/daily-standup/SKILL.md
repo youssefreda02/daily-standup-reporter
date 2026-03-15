@@ -3,41 +3,48 @@
 ## When to use
 When the user says any of:
 - "write my standup"
-- "daily log"
+- "daily log" / "daily report"
 - "what did I do today"
 - "generate standup"
 - "standup report"
-- "daily report"
 
 ## What it does
-Scans all configured git repos for today's commits, generates a structured daily standup report, and saves it as a markdown log.
+Scans all git repos under ~/projects/ for today's commits, generates a structured daily standup report, and sends it back to the user.
 
-## How to use
+## How to run
 
-### Quick standup (today)
+### Step 1: Make sure repos are up to date
 ```bash
-cd ~/daily-standup-reporter && node standup.js
+cd ~/projects && for d in */; do (cd "$d" && git pull 2>/dev/null); done
 ```
 
-### Specific date
+### Step 2: Generate standup
 ```bash
-cd ~/daily-standup-reporter && node standup.js 2026-03-15
+cd ~/projects/daily-standup-reporter && node standup-vps.js
 ```
 
-### Send to WhatsApp too
+### Step 3: For a specific date
 ```bash
-cd ~/daily-standup-reporter && node standup.js --whatsapp
+cd ~/projects/daily-standup-reporter && node standup-vps.js 2026-03-15
 ```
 
-## Adding repos
-Edit `standup.js` CONFIG.repos array to add more repositories to scan.
+## Adding more repos
+Clone any of the user's repos into ~/projects/:
+```bash
+cd ~/projects && git clone https://github.com/youssefreda02/<repo-name>.git
+```
 
-## Output
-- Logs saved to `logs/YYYY-MM-DD.md`
-- Shows: commit count, files changed, commit messages per repo
-- Can optionally send to WhatsApp
+Known repos:
+- daily-standup-reporter (public)
+- clinic-ai-solution (public)
+- AIEC-agent-hub (private - needs auth)
+- feshiu-web (private - needs auth)
+
+## Auto-discovery
+The script auto-discovers all git repos under ~/projects/ — no config needed. Just clone a repo there and it gets scanned.
 
 ## Important
 - Only run when the user asks — do NOT auto-generate
 - The user controls when standups are created
-- If the user asks to add something to the standup, edit the generated log file
+- Send the report text directly to the user in the chat
+- If the user asks to add notes, edit the log file in ~/projects/daily-standup-reporter/logs/
